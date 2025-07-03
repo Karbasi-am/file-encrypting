@@ -3,7 +3,7 @@ from cryptography.fernet import Fernet
 from requests import post
 from string import ascii_uppercase
 
-# Author Karbasi
+# Author: Karbasi
 
 # The code provided in this repository is for educational and informational purposes only.
 # I do not take any responsibility for any misuse or damage that may result from the use of this code.
